@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Love Story ❤️</title>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+
+body{
+margin:0;
+overflow:hidden;
+font-family:serif;
+background:black;
+color:white;
+}
+
+/* 🌌 BACKGROUND */
+body::before{
+content:"";
+position:fixed;
+width:100%;
+height:100%;
+background:radial-gradient(circle,#ff4f81,#000);
+opacity:0.7;
+z-index:-2;
+animation:bg 8s infinite alternate;
+}
+
+@keyframes bg{
+from{filter:hue-rotate(0deg);}
+to{filter:hue-rotate(40deg);}
+}
+
+/* 📸 SLIDES */
+.slide{
+position:absolute;
+width:100%;
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+opacity:0;
+transform:scale(1.1);
+transition:1s ease;
+pointer-events:none;
+padding:20px;
+}
+
+.active{
+opacity:1;
+transform:scale(1);
+pointer-events:auto;
+}
+
+/* 🔐 INPUT */
+input{
+padding:12px;
+width:80%;
+border-radius:10px;
+border:none;
+text-align:center;
+}
+
+/* BUTTON */
+button{
+padding:12px 25px;
+margin-top:15px;
+border:none;
+border-radius:25px;
+background:white;
+color:#ff4f81;
+font-weight:bold;
+cursor:pointer;
+}
+
+/* 🎂 CAKE */
+.cake{
+font-size:70px;
+animation:float 2s infinite;
+}
+
+@keyframes float{
+50%{transform:translateY(-10px)}
+}
+
+/* 💌 PAPER */
+.paper{
+background:#fdf1dc;
+color:#3b2f2f;
+padding:30px;
+border-radius:10px;
+max-width:600px;
+position:relative;
+}
+
+/* 🔥 BURN EFFECT */
+.burn::after{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:radial-gradient(circle at top,transparent,black);
+animation:burn 2.5s forwards;
+}
+
+@keyframes burn{
+from{opacity:0}
+to{opacity:1}
+}
+
+/* NAV */
+.nav{
+position:fixed;
+bottom:20px;
+width:100%;
+display:flex;
+justify-content:center;
+gap:10px;
+}
+
+.nav button{
+padding:10px 15px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- 🔐 SLIDE 1 -->
+<div class="slide active" id="s1">
+<h2>🔐 Enter Password</h2>
+<input type="password" id="pass">
+<button onclick="check()">Unlock ❤️</button>
+</div>
+
+<!-- 🎂 SLIDE 2 -->
+<div class="slide" id="s2">
+<h1>🎂 Happy Anniversary</h1>
+<div class="cake">🎂</div>
+<button onclick="next()">Open Letter 💌</button>
+</div>
+
+<!-- 💌 SLIDE 3 -->
+<div class="slide" id="s3">
+<div class="paper" id="paper">
+<h2>💌 My Love Letter</h2>
+<p>
+From the moment I met you,<br><br>
+you became my world ❤️
+</p>
+</div>
+<button onclick="burn()">Burn Letter 🔥</button>
+</div>
+
+<!-- 📸 SLIDE 4 -->
+<div class="slide" id="s4">
+<h2>📸 First We Met</h2>
+<p>Our beautiful beginning ❤️</p>
+<button onclick="next()">Next ➜</button>
+</div>
+
+<!-- 💋 SLIDE 5 -->
+<div class="slide" id="s5">
+<h2>💋 First Kiss</h2>
+<p>A moment I’ll never forget ❤️</p>
+<button onclick="next()">Next ➜</button>
+</div>
+
+<!-- 😂 SLIDE 6 -->
+<div class="slide" id="s6">
+<h2>😂 Funny Memory</h2>
+<p>We laughed like crazy 😂❤️</p>
+<button onclick="next()">Next ➜</button>
+</div>
+
+<!-- 🎧 SLIDE 7 -->
+<div class="slide" id="s7">
+<h2>🎧 First Voice Note</h2>
+<p>Your voice is my favorite sound ❤️</p>
+<button onclick="next()">Final ❤️</button>
+</div>
+
+<!-- ❤️ FINAL -->
+<div class="slide" id="s8">
+<h1>❤️ I Will Always Choose You ❤️</h1>
+<p>Our story never ends...</p>
+<button onclick="celebrate()">Finish 🎉</button>
+</div>
+
+<!-- NAV -->
+<div class="nav">
+<button onclick="prev()">⬅</button>
+<button onclick="next()">➡</button>
+</div>
+
+<script>
+
+let current=1;
+let total=8;
+
+/* PASSWORD */
+function check(){
+if(document.getElementById("pass").value==="love"){
+next();
+confetti();
+}else{
+alert("Wrong password 😢");
+}
+}
+
+/* NEXT */
+function next(){
+if(current<total){
+document.getElementById("s"+current).classList.remove("active");
+current++;
+document.getElementById("s"+current).classList.add("active");
+}
+}
+
+/* PREV */
+function prev(){
+if(current>1){
+document.getElementById("s"+current).classList.remove("active");
+current--;
+document.getElementById("s"+current).classList.add("active");
+}
+}
+
+/* BURN LETTER */
+function burn(){
+document.getElementById("paper").classList.add("burn");
+confetti({particleCount:200,spread:120});
+
+setTimeout(()=>next(),2000);
+}
+
+/* FINAL */
+function celebrate(){
+confetti({particleCount:400,spread:180});
+}
+
+</script>
+
+</body>
+</html>
